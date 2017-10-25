@@ -1,0 +1,13 @@
+macros:
+  package: NONE
+  image: "mbodenhamer/{{package}}-dev"
+  python-versions: 2.7.14,3.6.2
+  pydev: >
+    docker run --rm -it -e BE_UID=$(id -u) -e BE_GID=$(id -g)
+    -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/app
+    {{image}}:latest
+  
+
+tasks:
+  check: "{{pydev}} check-manifest"
+  build: "{{pydev}} python setup.py sdist bdist_wheel"
