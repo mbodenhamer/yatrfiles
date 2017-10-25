@@ -1,2 +1,2 @@
 # yatrfiles
-Yatrfiles for various applications
+[Yatrfiles](https://github.com/mbodenhamer/yatr) for various applications.
