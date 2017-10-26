@@ -1,0 +1,5 @@
+macros:
+  a: b
+
+tasks:
+  foo: "echo {{b}}"
