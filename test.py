@@ -15,9 +15,10 @@ def find_yamlfiles(path):
 
 def test():
     for fpath in find_yamlfiles(os.path.join(DIR, 'yatrfiles')):
+        print(fpath)
         doc = Document.from_path(fpath)
         doc.env.resolve_macros()
-        print(fpath) # If we get here, it validated
+        # If we get here, it validated
 
 #-------------------------------------------------------------------------------
 
