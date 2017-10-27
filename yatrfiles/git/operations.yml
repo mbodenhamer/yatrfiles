@@ -1,0 +1,3 @@
+tasks:
+  git-tag: 'git tag -a {{_1}} -m "{{_1}}"'
+  git-undo: "git reset --soft HEAD~"
