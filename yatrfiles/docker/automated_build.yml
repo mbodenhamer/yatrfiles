@@ -4,6 +4,7 @@ macros:
   image: "{{user}}/{{name}}"
   test_image: mbodenhamer/docker-test
   test_image_tag: latest
+  repository_name: "docker-{{name}}"
 
   docker_version: 17.07.0~ce-0~ubuntu
 
@@ -24,6 +25,8 @@ tasks:
   test:
     - build
     - quick-test
+
+  rsync: "rsync -avz . {{_1}}:{{repository_name}}"
 
   travis-install:
     - sudo apt-cache madison docker-ce
