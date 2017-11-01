@@ -20,7 +20,7 @@ macros:
     -v /tmp:/tmp {{test_image}}:{{test_image_tag}}
 
 tasks:
-  build: "{{TEST}} docker build -t {{image}}:latest {{pwd}}"
+  build: "{{TEST}} docker build -t {{image}}:latest ."
   shell: "docker run --rm -it -v {{pwd}}:/app {{image}} bash"
   test-shell: "{{TEST}} bash"
   quick-test: "{{TEST}} bats {{testdir}}"
