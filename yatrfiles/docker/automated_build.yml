@@ -1,6 +1,3 @@
-capture:
-  pwd: pwd
-
 macros:
   name: NONE
   user: mbodenhamer
@@ -15,13 +12,13 @@ macros:
   container_workdir: /app
 
   TEST: >
-    docker run --rm -it -v {{pwd}}:{{container_workdir}}
+    docker run --rm -it -v `pwd`:{{container_workdir}}
     -v /var/run/docker.sock:/var/run/docker.sock 
     -v /tmp:/tmp {{test_image}}:{{test_image_tag}}
 
 tasks:
   build: "{{TEST}} docker build -t {{image}}:latest ."
-  shell: "docker run --rm -it -v {{pwd}}:/app {{image}} bash"
+  shell: "docker run --rm -it -v `pwd`:/app {{image}} bash"
   test-shell: "{{TEST}} bash"
   quick-test: "{{TEST}} bats {{testdir}}"
 
