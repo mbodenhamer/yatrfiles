@@ -5,6 +5,8 @@ macros:
   test_image: mbodenhamer/docker-test
   test_image_tag: latest
   repository_name: "docker-{{name}}"
+  maintainer_name: Matt Bodenhamer
+  maintainer_email: mbodenhamer@mbodenhamer.com
 
   docker_version: 17.07.0~ce-0~ubuntu
 
@@ -17,11 +19,17 @@ macros:
     -v /tmp:/tmp {{test_image}}:{{test_image_tag}}
 
 tasks:
-  build: "{{TEST}} docker build -t {{image}}:latest ."
+  build_: "{{TEST}} docker build -t {{image}}:latest ."
+  render: yatr --render -i Dockerfile.j2 -o Dockerfile
+
+  build:
+    - render
+    - build_
+
   shell: "docker run --rm -it -v `pwd`:/app {{image}} bash"
   test-shell: "{{TEST}} bash"
-  quick-test: "{{TEST}} bats {{testdir}}"
 
+  quick-test: "{{TEST}} bats {{testdir}}"
   test:
     - build
     - quick-test
