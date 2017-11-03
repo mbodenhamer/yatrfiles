@@ -9,6 +9,8 @@ macros:
   repository_name: "docker-{{name}}"
   maintainer_name: Matt Bodenhamer
   maintainer_email: mbodenhamer@mbodenhamer.com
+  github_user: "{{user}}"
+  branch: master
 
   docker_version: 17.07.0~ce-0~ubuntu
 
@@ -23,6 +25,7 @@ macros:
 tasks:
   render_base:
     - yatr --render -i Dockerfile.j2 -o Dockerfile
+    - yatr --render -i README.j2 -o README.md
     - yatr --render -i tests/test_helpers.j2 -o tests/test_helpers.bash
     - yatr --render -i tests/packages.j2 -o tests/packages.bats
 
