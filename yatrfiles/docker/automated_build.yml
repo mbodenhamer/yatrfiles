@@ -1,5 +1,7 @@
+default: test
+
 macros:
-  name: NONE
+  name: NAME_HERE
   user: mbodenhamer
   image: "{{user}}/{{name}}"
   test_image: mbodenhamer/docker-test
@@ -13,20 +15,25 @@ macros:
   testdir: tests # directory where tests are located
   container_workdir: /app
 
+  run_prefix: "docker run --rm -it -v /tmp:/tmp -v `pwd`:{{container_workdir}}"
   TEST: >
-    docker run --rm -it -v `pwd`:{{container_workdir}}
-    -v /var/run/docker.sock:/var/run/docker.sock 
-    -v /tmp:/tmp {{test_image}}:{{test_image_tag}}
+    {{run_prefix}} -v /var/run/docker.sock:/var/run/docker.sock
+    {{test_image}}:{{test_image_tag}}
 
 tasks:
-  build_: "{{TEST}} docker build -t {{image}}:latest ."
-  render: yatr --render -i Dockerfile.j2 -o Dockerfile
+  render_base:
+    - yatr --render -i Dockerfile.j2 -o Dockerfile
+    - yatr --render -i tests/test_helpers.j2 -o tests/test_helpers.bash
+    - yatr --render -i tests/packages.j2 -o tests/packages.bats
 
+  render: render_base
+
+  build_image: "{{TEST}} docker build -t {{image}}:latest ."
   build:
     - render
-    - build_
+    - build_image
 
-  shell: "docker run --rm -it -v `pwd`:/app {{image}} bash"
+  shell: "{{run_prefix}} {{image}}:latest bash"
   test-shell: "{{TEST}} bash"
 
   quick-test: "{{TEST}} bats {{testdir}}"
@@ -38,5 +45,7 @@ tasks:
 
   travis-install:
     - sudo apt-cache madison docker-ce
-    - 'sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-ce={{docker_version}}'
+    - >
+      sudo apt-get -o Dpkg::Options::="--force-confnew"
+      install -y docker-ce={{docker_version}}
     - docker version
