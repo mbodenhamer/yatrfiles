@@ -18,9 +18,9 @@ macros:
   container_workdir: /app
 
   run_prefix: "docker run --rm -it -v `pwd`:{{container_workdir}}"
-  TEST: >
-    {{run_prefix}} -v /var/run/docker.sock:/var/run/docker.sock
-    -v /tmp:/tmp {{test_image}}:{{test_image_tag}}
+  launch_prefix: >
+    {{run_prefix}} -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp
+  TEST: "{{launch_prefix}} {{test_image}}:{{test_image_tag}}"
 
 tasks:
   render_base:
@@ -36,7 +36,7 @@ tasks:
     - render
     - build_image
 
-  shell: "{{run_prefix}} -v /tmp:/tmp {{image}}:latest bash"
+  shell: "{{launch_prefix}} {{image}}:latest bash"
   test-shell: "{{TEST}} bash"
 
   quick-test: "{{TEST}} bats {{testdir}}"
