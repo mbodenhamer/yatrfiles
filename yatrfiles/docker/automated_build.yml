@@ -25,7 +25,7 @@ macros:
 tasks:
   render_base:
     - yatr --render -i Dockerfile.j2 -o Dockerfile
-    - yatr --render -i README.j2 -o README.md
+    - yatr --render -i _README.j2 -o README.md
     - yatr --render -i tests/test_helpers.j2 -o tests/test_helpers.bash
     - yatr --render -i tests/packages.j2 -o tests/packages.bats
 
