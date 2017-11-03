@@ -1,3 +1,7 @@
 tasks:
   git-tag: 'git tag -a {{_1}} -m "{{_1}}"'
   git-undo: "git reset --soft HEAD~"
+
+  version:
+    - "git tag -a {{version}} -m {{version}}"
+    - "git push origin tag {{version}}"
