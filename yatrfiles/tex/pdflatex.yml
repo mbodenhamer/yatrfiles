@@ -1,0 +1,14 @@
+include:
+  - "{{urlbase}}/tex/latex.yml"
+
+macros:
+  urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master/yatrfiles
+
+tasks:
+  pdf: "pdflatex {{name}}.tex"
+
+  build:
+    - pdf
+    - bib
+    - pdf
+    - pdf

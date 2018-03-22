@@ -1,6 +1,12 @@
 default: build
 
+files:
+  article_template: "{{filebase}}/article.j2"
+  default_bib: "{{filebase}}/default.bib"
+
 macros:
+  urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master/yatrfiles
+  filebase: "{{urlbase}}/tex/files"
   name: NAME_HERE
   output: "{{name}}.pdf"
   dvips_opts: "-t letter -Ppdf -G0"
@@ -21,6 +27,18 @@ macros:
     - run.xml
     - toc
 
+  title: TITLE_HERE
+  author: AUTHOR_HERE
+  subject: SUBJECT_HERE
+  keywords: KEYWORDS_HERE
+
+  brace: "{"
+  tex_name: "{{brace}}{{name}}}"
+  tex_title: "{{brace}}{{title}}}"
+  tex_author: "{{brace}}{{author}}}"
+  tex_subject: "{{brace}}{{subject}}}"
+  tex_keywords: "{{brace}}{{keywords}}}"
+
 tasks:
   dvi: "latex {{name}}.tex"
   ps: "dvips {{name}}.dvi -o {{name}}.ps {{dvips_opts}}"
@@ -30,6 +48,12 @@ tasks:
   show: "evince {{output}} &"
   dated: "cp {{output}} {{name}}-`date +%Y-%m-%d`.pdf"
   wc: "pdftotext {{output}} - | wc -w"
+
+  init-article:
+    - "cp {{article_template}} {{CURDIR}}/_base.j2"
+    - "{{YATR}} --render -i {{CURDIR}}/_base.j2 -o {{CURDIR}}/{{name}}.tex"
+    - "cp {{default_bib}} {{CURDIR}}/{{name}}.bib"
+    - "rm {{CURDIR}}/_base.j2"
 
   clean:
     command: "rm -f {{name}}.{{clean_ext}}"
