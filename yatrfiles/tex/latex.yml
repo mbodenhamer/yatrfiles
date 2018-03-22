@@ -1,0 +1,46 @@
+default: build
+
+macros:
+  name: NAME_HERE
+  output: "{{name}}.pdf"
+  dvips_opts: "-t letter -Ppdf -G0"
+  clean_exts:
+    - aux
+    - bbl
+    - bcf
+    - blg
+    - dvi
+    - ilg
+    - log
+    - nlo
+    - nls
+    - out
+    - pdf
+    - ps
+    - ps.gz
+    - run.xml
+    - toc
+
+tasks:
+  dvi: "latex {{name}}.tex"
+  ps: "dvips {{name}}.dvi -o {{name}}.ps {{dvips_opts}}"
+  pdf: "ps2pdf {{name}}.ps"
+  bib: "bibtex {{name}}"
+
+  show: "evince {{output}} &"
+  dated: "cp {{output}} {{name}}-`date +%Y-%m-%d`.pdf"
+  wc: "pdftotext {{output}} - | wc -w"
+
+  clean:
+    command: "rm -f {{name}}.{{clean_ext}}"
+    for:
+      var: clean_ext
+      in: clean_exts
+
+  build:
+    - dvi
+    - bib
+    - dvi
+    - dvi
+    - ps
+    - pdf
