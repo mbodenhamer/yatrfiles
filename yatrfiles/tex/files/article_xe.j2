@@ -1,0 +1,71 @@
+\documentclass[12pt]{article}
+
+\usepackage{hyperref}
+\usepackage{hyperxmp}
+
+\usepackage{fullpage}
+\usepackage{times}
+
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+
+\usepackage[style=authortitle-icomp]{biblatex}
+\addbibresource{{brace}}{{name}}.bib}
+\usepackage{url}
+
+%-------------------------------------------------------------------------------
+% Hyperref setup
+
+\makeatletter
+  \AtEndDocument{\hyxmp@find@metadata\hyxmp@embed@packet}
+\makeatother
+\hypersetup{
+  pdftitle={{tex_title}},
+  pdfcreator={{tex_author}},
+  pdfauthor={{tex_author}},
+  pdfsubject={{tex_subject}},
+  pdfkeywords={{tex_keywords}},
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=black
+}
+
+%-------------------------------------------------------------------------------
+% Font setup
+
+\newfontfamily{\gen}{Gentium}
+
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+\title{{tex_title}}
+\author{{tex_author}}
+\date{}
+\maketitle
+
+%-------------------------------------------------------------------------------
+
+\begin{abstract}
+Abstract here...
+\end{abstract}
+
+%-------------------------------------------------------------------------------
+\section{A Section}
+
+Stuff here...
+
+Some claim that has a citation.\footcite[200]{genericbook2000}
+
+{\gen Something in Gentium.}
+
+%-------------------------------------------------------------------------------
+
+\printbibliography[]
+
+%-------------------------------------------------------------------------------
+
+\end{document}

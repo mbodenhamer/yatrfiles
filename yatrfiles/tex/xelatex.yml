@@ -1,8 +1,12 @@
 include:
   - "{{urlbase}}/tex/latex.yml"
 
+files:
+  article_template: "{{filebase}}/article_xe.j2"
+
 macros:
   urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master/yatrfiles
+  filebase: "{{urlbase}}/tex/files"
 
 tasks:
   bib: "biber {{name}}"
