@@ -1,0 +1,33 @@
+default: obtain
+
+capture:
+  user: id -u
+
+macros:
+  email: EMAIL_HERE
+  urls:
+    - URL_HERE
+  cert_dir: "{{CURDIR}}"
+  user: 1000
+  group: 1000
+
+tasks:
+  register: >
+    docker run -it --rm -p 80:80 -p 443:443 
+    -v "{{cert_dir}}":/etc/letsencrypt xataz/letsencrypt 
+    certonly --standalone --agree-tos 
+    -m {{email}} -d {{url}}
+
+  individuate:
+    - chown "{{user}}:{{group}}" "{{cert_dir}}/live/{{url}}/fullchain.pem"
+    - chown "{{user}}:{{group}}" "{{cert_dir}}/live/{{url}}/privkey.pem"
+    - mv "{{cert_dir}}/live/{{url}}/fullchain.pem" "{{url}}.crt"
+    - mv "{{cert_dir}}/live/{{url}}/privkey.pem" "{{url}}.key"
+
+  obtain:
+    command:
+      - register
+      - individuate
+    for:
+      var: url
+      in: urls
