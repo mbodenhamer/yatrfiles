@@ -1,6 +1,4 @@
 import os
-import sys
-from syn.base_utils import assign
 from yatr.main import _main
 
 DIR = os.path.abspath(os.path.dirname(__file__))
@@ -19,8 +17,7 @@ def find_yamlfiles(path):
 def test():
     for fpath in find_yamlfiles(os.path.join(DIR, 'yatrfiles')):
         print(fpath)
-        with assign(sys, 'exit', lambda *args, **kwargs: None):
-            _main('-f', fpath, '--validate')
+        _main('-f', fpath, '--validate')
 
 #-------------------------------------------------------------------------------
 
