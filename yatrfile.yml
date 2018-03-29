@@ -1,4 +1,26 @@
 default: test
 
+import:
+  - modules/yatrdev.py
+
 tasks:
   test: python test.py
+  
+  cache-yatrfiles:
+    command: cache_all
+    kwargs:
+      path: yatrfiles
+      urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master/yatrfiles
+      verbose: True
+
+  cache-modules:
+    command: cache_all
+    kwargs:
+      path: modules
+      urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master/modules
+      glob: "*.py"
+      verbose: True
+
+  cache:
+    - cache-yatrfiles
+    - cache-modules
