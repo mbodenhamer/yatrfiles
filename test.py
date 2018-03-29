@@ -1,5 +1,7 @@
 import os
-from yatr import Document
+import sys
+from syn.base_utils import assign
+from yatr.main import _main
 
 DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -8,16 +10,17 @@ DIR = os.path.abspath(os.path.dirname(__file__))
 def find_yamlfiles(path):
     for dirpath, _, fnames in os.walk(path):
         for fname in fnames:
-            if fname.endswith('.yml'):
-                yield os.path.join(dirpath, fname)
+            if os.path.basename(dirpath) != 'test':
+                if fname.endswith('.yml'):
+                    yield os.path.join(dirpath, fname)
 
 #-------------------------------------------------------------------------------
 
 def test():
     for fpath in find_yamlfiles(os.path.join(DIR, 'yatrfiles')):
         print(fpath)
-        doc = Document.from_path(fpath)
-        doc.post_process()
+        with assign(sys, 'exit', lambda *args, **kwargs: None):
+            _main('-f', fpath, '--validate')
 
 #-------------------------------------------------------------------------------
 

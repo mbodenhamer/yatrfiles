@@ -1,5 +1,8 @@
 default: obtain
 
+declare:
+  - url
+
 capture:
   user: id -u
 
