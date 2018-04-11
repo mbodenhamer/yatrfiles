@@ -1,13 +1,110 @@
+default: quick-test
+
+#-------------------------------------------------------------------------------
+capture:
+  version: "cat version.txt | xargs"
+
+#-------------------------------------------------------------------------------
 macros:
-  package: NONE
-  image: "mbodenhamer/{{package}}-dev"
-  python-versions: 2.7.14,3.6.2
+  package: NONE # TODO: replace with declare after resolving validation issue
+  dockerhub_user: mbodenhamer
+  python_versions: 2.7.14,3.6.2
+
+  source_dir: "{{package}}"
+  tests_dir: "tests"
+  docs_dir: "docs"
+  image: "{{dockerhub_user}}/{{package}}-dev"
+
+  py36: source .tox/py36/bin/activate
+  test_cmd: nosetests -s -v --pdb --pdb-failures
+  unit_test_cmd: "{{test_cmd}} -w {{source_dir}}"
+
   pydev: >
     docker run --rm -it -e BE_UID=$(id -u) -e BE_GID=$(id -g)
-    -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/app
+    -v /var/run/docker.sock:/var/run/docker.sock -v {{CURDIR}}:/app
     {{image}}:latest
-  
 
+  docker_build_prefix: >
+    docker build -t {{image}}:latest --build-arg versions={{python_versions}}
+  
+#-------------------------------------------------------------------------------
 tasks:
+
+  #-----------------------------------------------------------------------------
+  # Docker Image Management
+
+  docker-first-build:
+    - "{{docker_build_prefix}} --build-arg reqs=requirements.yml {{CURDIR}}"
+    - "{{pydev}} depman export dev -t pip -o dev-requirements.in --no-header"
+    - "{{pydev}} depman export prod -t pip -o requirements.in --no-header"
+    - "{{pydev}} pip-compile dev-requirements.in"
+    - "{{pydev}} pip-compile requirements.in"
+
+  docker-build: "{{docker_build_prefix}} {{CURDIR}}"
+  docker-rmi: "docker rmi {{image}}"
+  docker-push: "docker push {{image}}:latest"
+  docker-pull: "docker pull {{image}}:latest"
+  docker-shell: "{{pydev}} bash"
+
+  #-----------------------------------------------------------------------------
+  # Build Management
+
   check: "{{pydev}} check-manifest"
-  build: "{{pydev}} python setup.py sdist bdist_wheel"
+  build: 
+    - check
+    - "{{pydev}} python setup.py sdist bdist_wheel"
+
+  #-----------------------------------------------------------------------------
+  # Documentation
+
+  docs: 
+    - "{{pydev}} sphinx-apidoc -f -o {{docs_dir}} {{source_dir}}"
+    - "{{pydev}} make -C {{docs_dir}} html"
+  
+  view: >
+    python -c "import webbrowser as wb; 
+    wb.open('{{docs_dir}}/_build/html/index.html')"
+
+  #-----------------------------------------------------------------------------
+  # Dependency management
+
+  pip-compile:
+    - "{{pydev}} pip-compile dev-requirements.in"
+    - "{{pydev}} pip-compile requirements.in"
+
+  #-----------------------------------------------------------------------------
+  # Testing
+
+  test:
+    - "{{pydev}} coverage erase"
+    - "{{pydev}} tox"
+    - "{{pydev}} coverage html"
+
+  quick-test: "{{pydev}} {{test_cmd}}"
+  unit-test: "{{pydev}} {{unit_test_cmd}}"
+  
+  py3-quick-test: >
+    {{pydev}} bash -c "{{py36}}; {{test_cmd}}"
+
+  py3-unit-test: >
+    {{pydev}} bash -c "{{py36}}; {{unit_test_cmd}}"
+
+  dist-test:
+    - build
+    - "{{pydev}} dist-test {{version}}"
+
+  show: >
+    python -c "import webbrowser as wb; wb.open('htmlcov/index.html')"
+
+  #-----------------------------------------------------------------------------
+  # Cleanup
+
+  clean:
+    - "{{pydev}} fmap -r {{source_dir}} 'rm -f' '*.py[co]'"
+    - "{{pydev}} fmap -r {{source_dir}} -d rmdir __pycache__"
+    - "{{pydev}} fmap -r {{tests_dir}} 'rm -f' '*.py[co]'"
+    - "{{pydev}} fmap -r {{tests_dir}} -d rmdir __pycache__"
+    - "{{pydev}} make -C {{docs_dir}} clean"
+
+  #-----------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
