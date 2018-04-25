@@ -19,10 +19,10 @@ macros:
   test_cmd: nosetests -s -v --pdb --pdb-failures
   unit_test_cmd: "{{test_cmd}} -w {{source_dir}}"
 
-  pydev: >
+  pydev_prefix: >
     docker run --rm -it -e BE_UID=$(id -u) -e BE_GID=$(id -g)
     -v /var/run/docker.sock:/var/run/docker.sock -v {{CURDIR}}:/app
-    {{image}}:latest
+  pydev: "{{pydev_prefix}} {{image}}:latest"
 
   docker_build_prefix: >
     docker build -t {{image}}:latest --build-arg versions={{python_versions}}
