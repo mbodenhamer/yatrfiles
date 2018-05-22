@@ -1,0 +1,29 @@
+# Yatrfile for installing a specific docker version from source
+
+#-------------------------------------------------------------------------------
+macros:
+  docker_arch: x86_64
+  docker_version: 17.06.2-ce
+  docker_tmpdir: /tmp/install-docker
+
+#-------------------------------------------------------------------------------
+files:
+  docker_tarball: >
+    https://download.docker.com/linux/static/stable/{{docker_arch}}/docker-{{docker_version}}.tgz"
+
+#-------------------------------------------------------------------------------
+tasks:
+  install-docker-files:
+    - "mkdir {{docker_tmpdir}}"
+    - "cp {{docker_tarball}} {{docker_tmpdir}}"
+    - "tar zxf {{docker_tmpdir}}/{{docker_tarball}}"
+    - "mv {{docker_tmpdir}}/docker/* /usr/bin/"
+    - "rm -fv {{docker_tmpdir}}"
+
+  start-docker-daemon: "/usr/bin/dockerd &"
+
+  install-docker:
+    - install-docker-files
+    - start-docker-daemon
+
+#-------------------------------------------------------------------------------
