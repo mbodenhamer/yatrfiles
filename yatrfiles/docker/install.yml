@@ -15,7 +15,6 @@ tasks:
   install-docker-files:
     - "mkdir {{docker_tmpdir}}"
     - "curl -sSL -O {{docker_tarball_url}} -o {{docker_tmpdir}}/{{docker_tarball}}"
-    - "cp {{docker_tarball_url}} {{docker_tmpdir}}/{{docker_tarball}}"
     - "tar zxf {{docker_tmpdir}}/{{docker_tarball}} -C {{docker_tmpdir}}"
     - "mv {{docker_tmpdir}}/docker/* /usr/bin/"
     - "rm -rf {{docker_tmpdir}}"
