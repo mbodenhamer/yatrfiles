@@ -20,7 +20,7 @@ tasks:
     - "rm -rf {{docker_tmpdir}}"
 
   add-docker-group: >
-    bash -c "if [[ ! $(cat /etc/groups) =~ docker ]]; then addgroup docker; fi"
+    bash -c "if [[ ! $(cat /etc/group) =~ docker ]]; then addgroup docker; fi"
 
   start-docker-daemon: "/usr/bin/dockerd &"
 
