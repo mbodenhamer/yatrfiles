@@ -1,0 +1,20 @@
+# Yatrfile for a project that produces an executable
+
+#-------------------------------------------------------------------------------
+include:
+  - "{{urlbase}}/python/project.yml"
+
+#-------------------------------------------------------------------------------
+macros:
+  urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master/yatrfiles
+  install: pip install .
+
+#-------------------------------------------------------------------------------
+tasks:
+  quick-test: >
+    {{pydev}} bash -c "{{install}}; {{test_cmd}}"
+
+  py3-quick-test: >
+    {{pydev}} bash -c "{{py36}}; {{install}}; {{test_cmd}}"
+
+#-------------------------------------------------------------------------------
