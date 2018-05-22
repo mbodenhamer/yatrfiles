@@ -5,11 +5,8 @@ macros:
   docker_arch: x86_64
   docker_version: 17.06.2-ce
 
-  docker_tarball: "docker-{{docker_version}}.tgz"
   docker_tmpdir: /tmp/install-docker
-
-#-------------------------------------------------------------------------------
-files:
+  docker_tarball: "docker-{{docker_version}}.tgz"
   docker_tarball_url: >
     https://download.docker.com/linux/static/stable/{{docker_arch}}/{{docker_tarball}}
 
@@ -17,6 +14,7 @@ files:
 tasks:
   install-docker-files:
     - "mkdir {{docker_tmpdir}}"
+    - "curl -sSL -O {{docker_tarball_url}} -o {{docker_tmpdir}}/{{docker_tarball}}"
     - "cp {{docker_tarball_url}} {{docker_tmpdir}}/{{docker_tarball}}"
     - "tar zxf {{docker_tmpdir}}/{{docker_tarball}} -C {{docker_tmpdir}}"
     - "mv {{docker_tmpdir}}/docker/* /usr/bin/"
