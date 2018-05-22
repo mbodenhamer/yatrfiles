@@ -11,7 +11,7 @@ macros:
 #-------------------------------------------------------------------------------
 files:
   docker_tarball_url: >
-    https://download.docker.com/linux/static/stable/{{docker_arch}}/{{docker_tarball}}"
+    https://download.docker.com/linux/static/stable/{{docker_arch}}/{{docker_tarball}}
 
 #-------------------------------------------------------------------------------
 tasks:
