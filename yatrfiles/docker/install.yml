@@ -20,7 +20,7 @@ tasks:
     - "cp {{docker_tarball_url}} {{docker_tmpdir}}/{{docker_tarball}}"
     - "tar zxf {{docker_tmpdir}}/{{docker_tarball}} -C {{docker_tmpdir}}"
     - "mv {{docker_tmpdir}}/docker/* /usr/bin/"
-    - "rm -fv {{docker_tmpdir}}"
+    - "rm -rf {{docker_tmpdir}}"
 
   start-docker-daemon: "/usr/bin/dockerd &"
 
