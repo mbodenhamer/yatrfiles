@@ -24,3 +24,8 @@ tasks:
   cache:
     - cache-yatrfiles
     - cache-modules
+
+  docker-shell: >
+    docker run --rm -it --privileged -v {{CURDIR}}:/app
+    mbodenhamer/python-dev bash -c "pip install yatr; mkdir /root/.yatr; yatr cache; bash"
+    
