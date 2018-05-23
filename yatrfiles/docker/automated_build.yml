@@ -1,5 +1,6 @@
 default: test
 
+#-------------------------------------------------------------------------------
 macros:
   name: NAME_HERE
   user: mbodenhamer
@@ -22,7 +23,14 @@ macros:
     {{run_prefix}} -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp
   TEST: "{{launch_prefix}} {{test_image}}:{{test_image_tag}}"
 
+#-------------------------------------------------------------------------------
 tasks:
+
+  #-----------------------------------------------------------------------------
+  # Build
+
+  rsync: "rsync -avz . {{_1}}:{{repository_name}}"
+
   render_base:
     - yatr --render -i Dockerfile.j2 -o Dockerfile
     - yatr --render -i _README.j2 -o README.md
@@ -36,6 +44,9 @@ tasks:
     - render
     - build_image
 
+  #-----------------------------------------------------------------------------
+  # Test
+
   shell: "{{launch_prefix}} {{image}}:latest bash"
   test-shell: "{{TEST}} bash"
 
@@ -44,11 +55,11 @@ tasks:
     - build
     - quick-test
 
-  rsync: "rsync -avz . {{_1}}:{{repository_name}}"
-
   travis-install:
     - sudo apt-cache madison docker-ce
     - >
       sudo apt-get -o Dpkg::Options::="--force-confnew"
       install -y docker-ce={{docker_version}}
     - docker version
+
+#-------------------------------------------------------------------------------
