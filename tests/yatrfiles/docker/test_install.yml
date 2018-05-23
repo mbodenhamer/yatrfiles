@@ -1,0 +1,15 @@
+#-------------------------------------------------------------------------------
+include:
+  - "{{urlbase}}/docker/install.yml"
+
+#-------------------------------------------------------------------------------
+macros:
+  urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master/yatrfiles
+
+#-------------------------------------------------------------------------------
+tasks:
+  docker-shell: >
+    docker run --rm -it --privileged
+    -v  $(pwd):/app -w /app mbodenhamer/python-dev bash
+
+#-------------------------------------------------------------------------------

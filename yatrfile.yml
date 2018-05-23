@@ -1,11 +1,27 @@
+#-------------------------------------------------------------------------------
 default: test
 
+#-------------------------------------------------------------------------------
 import:
   - modules/yatrdev.py
 
+#-------------------------------------------------------------------------------
+macros:
+  docker_shell_cmd: >
+    pip install yatr &&
+    mkdir /root/.yatr &&
+    yatr --install-bash-completions &&
+    echo 'source /etc/bash_completion.d/yatr' >> /root/.bashrc &&
+    yatr cache &&
+    bash
+
+#-------------------------------------------------------------------------------
 tasks:
   test: python test.py
   
+  #-----------------------------------------------------------------------------
+  # Caching
+
   cache-yatrfiles:
     command: cache_all
     kwargs:
@@ -25,7 +41,11 @@ tasks:
     - cache-yatrfiles
     - cache-modules
 
+  #-----------------------------------------------------------------------------
+  # Docker
+
   docker-shell: >
-    docker run --rm -it --privileged -v {{CURDIR}}:/app
-    mbodenhamer/python-dev bash -c "pip install yatr; mkdir /root/.yatr; yatr cache; bash"
-    
+    docker run --rm -it -v {{CURDIR}}:/app
+    mbodenhamer/python-dev bash -c "{{docker_shell_cmd}}"
+
+#-------------------------------------------------------------------------------
