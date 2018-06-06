@@ -1,4 +1,4 @@
-default: test
+default: test-files
 
 #-------------------------------------------------------------------------------
 import:
@@ -14,10 +14,28 @@ macros:
     yatr cache &&
     bash
 
+  testfiles:
+    - yatrfiles/python/test_packages.yml
+
 #-------------------------------------------------------------------------------
 tasks:
-  test: python test.py
-  
+  #-----------------------------------------------------------------------------
+  # Tests
+
+  test: >
+    yatr -f "{{CURDIR}}/tests/{{_1}}"
+
+  run-tests:
+    for: testfile in testfiles
+    command:
+      - echo "{{CURDIR}}/tests/{{testfile}}"
+      - "yatr -f {{CURDIR}}/tests/{{testfile}} --validate"
+      - "yatr -f {{CURDIR}}/tests/{{testfile}}"
+
+  test-files: 
+    - python test.py
+    - run-tests
+
   #-----------------------------------------------------------------------------
   # Caching
 

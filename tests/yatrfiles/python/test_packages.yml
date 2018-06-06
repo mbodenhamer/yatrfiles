@@ -1,0 +1,19 @@
+default: test
+
+#-------------------------------------------------------------------------------
+include:
+  - "{{urlbase}}/python/packages.yml"
+
+#-------------------------------------------------------------------------------
+macros:
+  urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master/yatrfiles
+
+#-------------------------------------------------------------------------------
+tasks:
+  test:    
+    command: "echo {{name}}: {{packages[name].version}}"
+    for:
+      var: name
+      in: package_names
+
+#-------------------------------------------------------------------------------
