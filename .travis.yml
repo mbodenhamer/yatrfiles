@@ -6,4 +6,5 @@ install:
   - pip install yatr
 
 script:
-  yatr test
+  - yatr --version
+  - yatr
