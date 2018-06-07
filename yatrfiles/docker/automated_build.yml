@@ -32,10 +32,10 @@ tasks:
   rsync: "rsync -avz . {{_1}}:{{repository_name}}"
 
   render_base:
-    - yatr --render -i Dockerfile.j2 -o Dockerfile
-    - yatr --render -i _README.j2 -o README.md
-    - yatr --render -i tests/test_helpers.j2 -o tests/test_helpers.bash
-    - yatr --render -i tests/packages.j2 -o tests/packages.bats
+    - yatr --render -i templates/Dockerfile -o Dockerfile
+    - yatr --render -i templates/README.md -o README.md
+    - yatr --render -i tests/templates/test_helpers.bash -o tests/test_helpers.bash
+    - yatr --render -i tests/templates/packages.bash -o tests/packages.bats
 
   render: render_base
 
