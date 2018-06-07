@@ -11,7 +11,7 @@ macros:
 #-------------------------------------------------------------------------------
 tasks:
   test:    
-    command: "echo {{name}}: {{packages[name].version}}"
+    command: "echo {{name}}: {{packages[name].version.stable}}"
     for:
       var: name
       in: package_names
