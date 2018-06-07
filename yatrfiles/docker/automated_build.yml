@@ -53,7 +53,7 @@ tasks:
   #-----------------------------------------------------------------------------
   # Test
 
-  shell: "{{launch_prefix}} {{image}}:latest bash"
+  shell: "{{launch_prefix}} {{image}}:{{_1|default('latest')}} bash"
   test-shell: "{{TEST}} bash"
 
   quick-test: "{{TEST}} bats {{testdir}}"
