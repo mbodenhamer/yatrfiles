@@ -30,6 +30,7 @@ tasks:
   # Build
 
   rsync: "rsync -avz . {{_1}}:{{repository_name}}"
+  rsyncd: "rsync -avz {{_1}}:{{repository_name}}/ ."
 
   render_base:
     - yatr --render -i templates/Dockerfile -o Dockerfile
