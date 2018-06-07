@@ -37,7 +37,6 @@ tasks:
     - run-tests
 
   travis:
-    - yatr --version
     - cache
     - test-files
 
