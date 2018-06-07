@@ -1,6 +1,10 @@
 default: quick-test
 
 #-------------------------------------------------------------------------------
+declare:
+  - dependency_tester
+
+#-------------------------------------------------------------------------------
 capture:
   version: "cat version.txt | xargs"
 
@@ -18,6 +22,7 @@ macros:
   py36: source .tox/py36/bin/activate
   test_cmd: nosetests -s -v --pdb --pdb-failures
   unit_test_cmd: "{{test_cmd}} -w {{source_dir}}"
+  dependency_test_cmd: "{{test_cmd}}"
 
   pydev_prefix: >
     docker run --rm -it -e BE_UID=$(id -u) -e BE_GID=$(id -g)
@@ -95,6 +100,9 @@ tasks:
 
   show: >
     python -c "import webbrowser as wb; wb.open('htmlcov/index.html')"
+
+  # Used when testing the effect of changes to this projects dependencies
+  dependency-test: "{{dependency_tester}} {{dependency_test_cmd}}"
 
   #-----------------------------------------------------------------------------
   # Cleanup
