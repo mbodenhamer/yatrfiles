@@ -45,6 +45,11 @@ tasks:
     - build_image
 
   #-----------------------------------------------------------------------------
+  # Image Management
+
+  pull: "docker pull {{image}}:{{_1|default('latest')}}"
+
+  #-----------------------------------------------------------------------------
   # Test
 
   shell: "{{launch_prefix}} {{image}}:latest bash"
@@ -53,6 +58,10 @@ tasks:
   quick-test: "{{TEST}} bats {{testdir}}"
   test:
     - build
+    - quick-test
+
+  pull-test:
+    - pull
     - quick-test
 
   travis-install:
