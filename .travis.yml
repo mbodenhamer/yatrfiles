@@ -5,6 +5,4 @@ python:
 install:
   - pip install yatr
 
-script:
-  - yatr --version
-  - yatr
+script: yatr travis

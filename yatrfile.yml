@@ -36,6 +36,11 @@ tasks:
     - python test.py
     - run-tests
 
+  travis:
+    - yatr --version
+    - cache
+    - test-files
+
   #-----------------------------------------------------------------------------
   # Caching
 
