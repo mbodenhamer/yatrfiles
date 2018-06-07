@@ -7,10 +7,6 @@ import:
 #-------------------------------------------------------------------------------
 macros:
   docker_shell_cmd: >
-    pip install yatr &&
-    mkdir /root/.yatr &&
-    yatr --install-bash-completions &&
-    echo 'source /etc/bash_completion.d/yatr' >> /root/.bashrc &&
     yatr cache &&
     bash
 
@@ -67,7 +63,7 @@ tasks:
   # Docker
 
   docker-shell: >
-    docker run --rm -it -v {{CURDIR}}:/app
-    mbodenhamer/python-dev bash -c "{{docker_shell_cmd}}"
+    docker run --rm -it -v {{CURDIR}}:/app -w /app
+    mbodenhamer/alpine-python bash -c "{{docker_shell_cmd}}"
 
 #-------------------------------------------------------------------------------
