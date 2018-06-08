@@ -1,0 +1,25 @@
+# Yatfile for installing bats from source
+
+#-------------------------------------------------------------------------------
+macros:
+  bats_version: 0.4.0
+  bats_tmpdir: /tmp/install-bats
+  bats_tarball: "v{{bats_version}}.tar.gz"
+  bats_tarball_url: >
+    https://github.com/sstephenson/bats/archive/{{bats_tarball}}
+
+#-------------------------------------------------------------------------------
+tasks:
+  install-bats:
+    - "mkdir {{bats_tmpdir}}"
+    - "curl -sSL -o {{bats_tmpdir}}/{{bats_tarball}} {{bats_tarball_url}}"
+    - "tar zxf {{bats_tmpdir}}/{{bats_tarball}} -C {{bats_tmpdir}}"
+    - "{{bats_tmpdir}}/bats-{{bats_version}}/install.sh /usr/local"
+    - "rm -rf {{bats_tmpdir}}"
+
+  install-bats-git:
+    - "git clone https://github.com/sstephenson/bats.git {{bats_tmpdir}}"
+    - "{{bats_tmpdir}}/install.sh /usr/local"
+    - "rm -rf {{bats_tmpdir}}"
+
+#-------------------------------------------------------------------------------
