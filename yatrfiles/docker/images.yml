@@ -1,0 +1,35 @@
+#-------------------------------------------------------------------------------
+macros:
+  #-----------------------------------------------------------------------------
+  
+  # until yatr supports iteration over dict macros
+  image_names:
+    - alpine-python
+    - alpine-python3
+    - alpine-python-docker
+    - debian-python
+    - debian-python3
+
+  images:
+    alpine-python:
+      version:
+        latest: 0.2.1
+
+    alpine-python3:
+      version:
+        latest: 0.1
+
+    alpine-python-docker:
+      version:
+        latest: 0.1
+
+    debian-python:
+      version:
+        latest: 0.1
+
+    debian-python3:
+      version:
+        latest: 0.1
+
+  #-----------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
