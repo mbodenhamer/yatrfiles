@@ -1,0 +1,19 @@
+default: test
+
+#-------------------------------------------------------------------------------
+include:
+  - "{{urlbase}}/docker/images.yml"
+
+#-------------------------------------------------------------------------------
+macros:
+  urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master/yatrfiles
+
+#-------------------------------------------------------------------------------
+tasks:
+  test:    
+    command: "echo {{name}}: {{images[name].version.latest}}"
+    for:
+      var: name
+      in: image_names
+
+#-------------------------------------------------------------------------------

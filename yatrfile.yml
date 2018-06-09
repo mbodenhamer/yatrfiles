@@ -11,6 +11,7 @@ macros:
     bash
 
   testfiles:
+    - yatrfiles/docker/test_images.yml
     - yatrfiles/python/test_packages.yml
 
 #-------------------------------------------------------------------------------
@@ -22,7 +23,9 @@ tasks:
     yatr -f "{{CURDIR}}/tests/{{_1}}"
 
   run-tests:
-    for: testfile in testfiles
+    for:
+      var: testfile
+      in: testfiles
     command:
       - echo "{{CURDIR}}/tests/{{testfile}}"
       - "yatr -f {{CURDIR}}/tests/{{testfile}} --validate"
