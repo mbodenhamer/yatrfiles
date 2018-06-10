@@ -1,16 +1,17 @@
 #-------------------------------------------------------------------------------
 macros:
   #-----------------------------------------------------------------------------
+  # Automated Builds on Docker Hub
   
   # until yatr supports iteration over dict macros
-  image_names:
+  automated_build_names:
     - alpine-python
     - alpine-python3
     - alpine-python-docker
     - debian-python
     - debian-python3
 
-  images:
+  automated_builds:
     alpine-python:
       version:
         latest: 0.2.1
@@ -32,4 +33,19 @@ macros:
         latest: 0.1
 
   #-----------------------------------------------------------------------------
+  # Locally-Built and Pushed to Docker Hub
+
+  image_names:
+    - depman-dev
+    - yatr-dev
+
+  images:
+    depman-dev:
+      version:
+        latest: 0.3.3
+
+    yatr-dev:
+      version:
+        latest: 0.0.2
+
 #-------------------------------------------------------------------------------

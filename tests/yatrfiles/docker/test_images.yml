@@ -10,10 +10,20 @@ macros:
 
 #-------------------------------------------------------------------------------
 tasks:
-  test:    
+  test-automated-builds:
+    command: "echo {{name}}: {{automated_builds[name].version.latest}}"
+    for:
+      var: name
+      in: automated_build_names
+
+  test-images:
     command: "echo {{name}}: {{images[name].version.latest}}"
     for:
       var: name
       in: image_names
+
+  test:
+    - test-automated-builds
+    - test-images
 
 #-------------------------------------------------------------------------------
