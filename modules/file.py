@@ -6,7 +6,7 @@ env = Env()
 #-------------------------------------------------------------------------------
 # replace_in_file
 
-@env.task('replace_in_file', display=('path', 'pattern', 'repl'))
+@env.task('replace-in-file', display=('path', 'pattern', 'repl'))
 def replace_in_file(env, *args, **kwargs):
     import re
 
@@ -17,7 +17,7 @@ def replace_in_file(env, *args, **kwargs):
     with open(path, 'r') as f:
         txt = f.read()
 
-    re.sub(pattern, repl, txt)
+    txt = re.sub(pattern, repl, txt)
 
     with open(path, 'w') as f:
         f.write(txt)

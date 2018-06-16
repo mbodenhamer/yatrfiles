@@ -1,0 +1,31 @@
+default: test
+
+#-------------------------------------------------------------------------------
+import:
+  - "{{urlbase}}/modules/file.py"
+
+#-------------------------------------------------------------------------------
+macros:
+  urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master
+  tmpdir: "/tmp/yatrfile_tests"
+
+#-------------------------------------------------------------------------------
+tasks:
+  test:
+    - test-file
+
+  test-file:
+    - echo test-file
+    - mkdir "{{tmpdir}}"
+    - "echo abcdefghi > {{tmpdir}}/foo"
+    - task:
+        command: replace-in-file
+        kwargs:
+          path: "/tmp/yatrfile_tests/foo" # TODO: yatr needs to support macro resolution here
+          pattern: "def"
+          repl: "abc"
+    - cat "{{tmpdir}}/foo"
+    - "[ `cat {{tmpdir}}/foo` = abcabcghi ]"
+    - rm -rf "{{tmpdir}}"
+
+#-------------------------------------------------------------------------------
