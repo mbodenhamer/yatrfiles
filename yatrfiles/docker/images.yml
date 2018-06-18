@@ -14,23 +14,28 @@ macros:
   automated_builds:
     alpine-python:
       version:
-        latest: 0.2.1
+        latest: 0.4
+        stable: 0.3
 
     alpine-python3:
       version:
-        latest: 0.1
+        latest: 0.3
+        stable: 0.2
 
     alpine-python-docker:
       version:
-        latest: 0.1
+        latest: 0.1.1
+        stable: 0.1
 
     debian-python:
       version:
-        latest: 0.1
+        latest: 0.2
+        stable: 0.1
 
     debian-python3:
       version:
-        latest: 0.1
+        latest: 0.2
+        stable: 0.1
 
   #-----------------------------------------------------------------------------
   # Locally-Built and Pushed to Docker Hub
