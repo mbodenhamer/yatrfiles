@@ -6,22 +6,38 @@ macros:
   yatr_version: 0.0.10
   
   source_root: "{{env('SYN_PACKAGES_SOURCE_ROOT', CURDIR)}}"
+  install_tmpdir: /tmp/install-package
 
   #-----------------------------------------------------------------------------
 
   # until yatr supports iteration over dict macros
   package_names: 
     - depman
+    - fmap
     - yatr
 
   packages:
     depman:
+      git_repo: https://github.com/mbodenhamer/depman.git
       version: 
         stable: 0.3.4
     
+    fmap:
+      git_repo: https://github.com/mbodenhamer/fmap.git
+      version:
+        stable: v0.1
+
     yatr:
+      git_repo: https://github.com/mbodenhamer/yatr.git
       version: 
         stable: 0.0.10
 
-  #-----------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+tasks:
+  
+  install-from-git:
+    - "git clone {{packages[_1].git_repo}} {{install_tmpdir}}"
+    - "cd {{install_tmpdir}} && python setup.py install"
+    - "rm -rf {{install_tmpdir}}"
+
 #-------------------------------------------------------------------------------
