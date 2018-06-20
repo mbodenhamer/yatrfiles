@@ -4,7 +4,7 @@ python:
 
 install:
   - git clone https://github.com/mbodenhamer/yatr.git
-  - cd yatr && python setup.py install
+  - pip install yatr
   - mkdir "${HOME}/.yatr"
 
 script: yatr travis
