@@ -1,8 +1,13 @@
 default: test
 
 #-------------------------------------------------------------------------------
+include:
+  - "{{urlbase}}/yatrfiles/docker/images.yml"
+
+#-------------------------------------------------------------------------------
 macros:
-  name: NAME_HERE
+  urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master
+  name: ""
   user: mbodenhamer
   image: "{{user}}/{{name}}"
   test_image: mbodenhamer/docker-test
@@ -12,6 +17,7 @@ macros:
   maintainer_email: mbodenhamer@mbodenhamer.com
   github_user: "{{user}}"
   branch: master
+  version: "{{automated_builds[name].version.latest}}"
 
   docker_version: 17.07.0~ce-0~ubuntu
 
