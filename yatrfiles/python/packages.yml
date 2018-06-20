@@ -31,13 +31,14 @@ macros:
       git_repo: https://github.com/mbodenhamer/yatr.git
       version: 
         stable: 0.0.10
+        latest: 0.0.11a
 
 #-------------------------------------------------------------------------------
 tasks:
   
   install-from-git:
     - "git clone {{packages[_1].git_repo}} {{install_tmpdir}}"
-    - "cd {{install_tmpdir}} && python setup.py install"
+    - "pip install {{install_tmpdir}}"
     - "rm -rf {{install_tmpdir}}"
 
 #-------------------------------------------------------------------------------
