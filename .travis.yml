@@ -3,7 +3,8 @@ python:
   - "2.7"
 
 install:
-  - pip install yatr
+  - git clone https://github.com/mbodenhamer/yatr.git
+  - cd yatr && python setup.py install
   - mkdir "${HOME}/.yatr"
 
 script: yatr travis
