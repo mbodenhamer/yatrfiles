@@ -1,0 +1,14 @@
+# Yatrfile for installing yatr from source
+
+#-------------------------------------------------------------------------------
+macros:
+  yatr_tmpdir: /tmp/install-yatr
+
+#-------------------------------------------------------------------------------
+tasks:
+  install-yatr:
+    - "git clone https://github.com/mbodenhamer/yatr.git {{yatr_tmpdir}}"
+    - "cd {{yatr_tmpdir}}; python setup.py install"
+    - "rm -rf {{yatr_tmpdir}}"
+
+#-------------------------------------------------------------------------------
