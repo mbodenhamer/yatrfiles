@@ -107,6 +107,14 @@ tasks:
   dependency-test: "{{dependency_tester}} {{dependency_test_cmd}}"
 
   #-----------------------------------------------------------------------------
+  # Version Management
+  
+  install-latest:
+    command: install-from-git
+    args:
+      - "{{package}}"
+
+  #-----------------------------------------------------------------------------
   # Cleanup
 
   clean:
