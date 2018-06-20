@@ -2,9 +2,6 @@
 macros:
   #-----------------------------------------------------------------------------
 
-  depman_version: 0.3.4
-  yatr_version: 0.0.10
-  
   source_root: "{{env('SYN_PACKAGES_SOURCE_ROOT', CURDIR)}}"
   install_tmpdir: /tmp/install-package
 
