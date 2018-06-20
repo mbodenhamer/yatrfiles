@@ -21,17 +21,19 @@ macros:
       git_repo: https://github.com/mbodenhamer/depman.git
       version: 
         stable: 0.3.4
-    
+        latest: 0.4.0
+
     fmap:
       git_repo: https://github.com/mbodenhamer/fmap.git
       version:
         stable: v0.1
+        latest: 0.2
 
     yatr:
       git_repo: https://github.com/mbodenhamer/yatr.git
       version: 
         stable: 0.0.10
-        latest: 0.0.11a
+        latest: 0.0.11b
 
 #-------------------------------------------------------------------------------
 tasks:
