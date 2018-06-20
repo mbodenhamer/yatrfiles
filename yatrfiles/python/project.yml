@@ -5,14 +5,16 @@ declare:
   - dependency_tester
 
 #-------------------------------------------------------------------------------
-capture:
-  version: "cat version.txt | xargs"
+include:
+  - "{{urlbase}}/yatrfiles/python/packages.yml"
 
 #-------------------------------------------------------------------------------
 macros:
-  package: NONE # TODO: replace with declare after resolving validation issue
+  urlbase: https://raw.githubusercontent.com/mbodenhamer/yatrfiles/master
+  package: '' # TODO: replace with declare after resolving validation issue
   dockerhub_user: mbodenhamer
   python_versions: 2.7.14,3.6.2
+  version: "{{packages[package].version.latest}}"
 
   source_dir: "{{package}}"
   tests_dir: "tests"
