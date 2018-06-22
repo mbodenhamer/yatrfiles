@@ -14,6 +14,12 @@ macros:
     - yatr
 
   packages:
+    dockerman:
+      git_repo: https://github.com/mbodenhamer/dockerman.git
+      version:
+        stable: 0.1.2
+        latest: 0.1.3
+
     depman:
       git_repo: https://github.com/mbodenhamer/depman.git
       version: 
