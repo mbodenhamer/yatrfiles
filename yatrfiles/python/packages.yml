@@ -9,11 +9,19 @@ macros:
 
   # until yatr supports iteration over dict macros
   package_names: 
+    - dockerman
     - depman
     - fmap
     - yatr
 
   packages:
+    algorithm_logger:
+      git_repo: https://github.com/mbodenhamer/algorithm-logger.git
+      name: algorithm-logger
+      version:
+        stable: 0.0.1
+        latest: 0.0.2
+    
     dockerman:
       git_repo: https://github.com/mbodenhamer/dockerman.git
       version:
