@@ -9,6 +9,7 @@ macros:
 
   # until yatr supports iteration over dict macros
   package_names: 
+    - algorithm_logger
     - dockerman
     - depman
     - fmap
