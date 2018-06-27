@@ -11,6 +11,7 @@ macros:
   package_names: 
     - algorithm_logger
     - dockerman
+    - docker_master
     - depman
     - fmap
     - yatr
@@ -28,6 +29,12 @@ macros:
       version:
         stable: 0.1.2
         latest: 0.1.3
+
+    docker_master:
+      git_repo: https://github.com/mbodenhamer/docker-master.git
+      version:
+        stable: 0.0.2
+        latest: 0.1
 
     depman:
       git_repo: https://github.com/mbodenhamer/depman.git

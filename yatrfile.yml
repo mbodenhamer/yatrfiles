@@ -11,8 +11,8 @@ macros:
     bash
 
   testfiles:
-    - yatrfiles/docker/test_images.yml
     - yatrfiles/python/test_packages.yml
+    - yatrfiles/docker/test_images.yml
 
 #-------------------------------------------------------------------------------
 tasks:
