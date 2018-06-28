@@ -52,7 +52,7 @@ macros:
       git_repo: https://github.com/mbodenhamer/yatr.git
       version: 
         stable: 0.0.10
-        latest: 0.0.11c
+        latest: 0.0.11a2
 
 #-------------------------------------------------------------------------------
 tasks:
